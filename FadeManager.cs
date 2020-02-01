@@ -10,12 +10,14 @@ public class FadeManager : MonoBehaviour
     public float fadeSpeed;
     public bool fading;
 
-    private void Awake() {
+    private void Awake()
+    {
         fadeImage.transform.localScale = new Vector2(Screen.width, Screen.height);
         StartCoroutine(Fade(Color.black, fadeImage));
     }
 
-    public IEnumerator Fade(Color color, Image image) {
+    public IEnumerator Fade(Color color, Image image)
+    {
         fading = true;
         yield return FadeIn(color, image);
         yield return new WaitForSeconds(0.5f);
@@ -23,10 +25,13 @@ public class FadeManager : MonoBehaviour
         fading = false;
     }
 
-    public IEnumerator FadeIn(Color color, Image image) {
-        while(fading) {
+    public IEnumerator FadeIn(Color color, Image image)
+    {
+        while (fading)
+        {
             fadeImage.color = Color.Lerp(image.color, color, fadeSpeed * Time.deltaTime);
-            if (fadeImage.color.a >= 0.95f) {
+            if (fadeImage.color.a >= 0.95f)
+            {
                 fadeImage.color = Color.black;
                 yield break;
             }
@@ -35,10 +40,13 @@ public class FadeManager : MonoBehaviour
         }
     }
 
-    public IEnumerator FadeOut(Image image) {
-        while (fading) {
+    public IEnumerator FadeOut(Image image)
+    {
+        while (fading)
+        {
             fadeImage.color = Color.Lerp(image.color, Color.clear, fadeSpeed * Time.deltaTime);
-            if (fadeImage.color.a <= 0.05f) {
+            if (fadeImage.color.a <= 0.05f)
+            {
                 fadeImage.color = Color.clear;
                 yield break;
             }
