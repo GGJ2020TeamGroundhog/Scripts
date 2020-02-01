@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class InteractableEnvironment : Interactables
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public string roomName;
+    public GameObject room;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public override void Interact(string name) {
+        GameObject.FindGameObjectWithTag("FadeManager").GetComponent<FadeManager>().Fade();
+        Camera.main.transform.position = room.transform.position;
     }
 }
