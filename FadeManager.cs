@@ -6,25 +6,26 @@ using UnityEngine.UI;
 public class FadeManager : MonoBehaviour
 {
     public Image fadeImage;
+    public Image artifactImage;
     public float fadeSpeed;
     public bool fading;
 
     private void Awake() {
         fadeImage.transform.localScale = new Vector2(Screen.width, Screen.height);
-        StartCoroutine(Fade());
+        StartCoroutine(Fade(Color.black, fadeImage));
     }
 
-    public IEnumerator Fade() {
+    public IEnumerator Fade(Color color, Image image) {
         fading = true;
-        yield return FadeIn();
+        yield return FadeIn(color, image);
         yield return new WaitForSeconds(0.5f);
-        yield return FadeOut();
+        yield return FadeOut(image);
         fading = false;
     }
 
-    public IEnumerator FadeIn() {
+    public IEnumerator FadeIn(Color color, Image image) {
         while(fading) {
-            fadeImage.color = Color.Lerp(fadeImage.color, Color.black, fadeSpeed * Time.deltaTime);
+            fadeImage.color = Color.Lerp(image.color, color, fadeSpeed * Time.deltaTime);
             if (fadeImage.color.a >= 0.95f) {
                 fadeImage.color = Color.black;
                 yield break;
@@ -34,9 +35,9 @@ public class FadeManager : MonoBehaviour
         }
     }
 
-    public IEnumerator FadeOut() {
+    public IEnumerator FadeOut(Image image) {
         while (fading) {
-            fadeImage.color = Color.Lerp(fadeImage.color, Color.clear, fadeSpeed * Time.deltaTime);
+            fadeImage.color = Color.Lerp(image.color, Color.clear, fadeSpeed * Time.deltaTime);
             if (fadeImage.color.a <= 0.05f) {
                 fadeImage.color = Color.clear;
                 yield break;
